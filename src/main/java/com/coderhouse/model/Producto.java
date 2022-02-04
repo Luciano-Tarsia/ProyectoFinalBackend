@@ -1,28 +1,25 @@
 package com.coderhouse.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
-
+@Builder
 @Getter
 @Setter
 @ToString
-@Document("usuarios")
-public class Usuario implements Serializable {
+@Document("productos")
+public class Producto {
+
     @Id
     private String id;
     private String nombre;
-    private String tipo;
+    private Float precio;
+    private String categoria;
+    private String descripcion;
     private String actualizacion;
-
-    public Usuario(String nombre, String tipo){
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.actualizacion = "Hola";
-    }
 
 }

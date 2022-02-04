@@ -1,7 +1,7 @@
 package com.coderhouse.controller;
 
-import com.coderhouse.handle.ExceptionUsuario;
-import com.coderhouse.model.Usuario;
+import com.coderhouse.handle.ExceptionProducto;
+import com.coderhouse.model.Producto;
 import com.coderhouse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,38 +18,36 @@ public class Controller {
     @Autowired
     UserService service;
 
-    @PostMapping(path = "/usuario")
-    private Usuario crearUsuario(@RequestBody Usuario nuevoUsuario) throws ResponseStatusException {
-        return service.crearUsuario(nuevoUsuario);
+    @PostMapping(path = "/producto")
+    private Producto crearProducto(@RequestBody Producto nuevoProducto) throws ResponseStatusException {
+        return service.crearProducto(nuevoProducto);
     }
 
 
-    @GetMapping(path = "/usuario/{id}")
-    private Usuario getUsuarioById(@PathVariable String id) throws ResponseStatusException {
+    @GetMapping(path = "/producto/{id}")
+    private Producto getProductoById(@PathVariable String id) throws ResponseStatusException {
         try {
-            return service.getUsuarioById(id);
-        }catch(ExceptionUsuario exceptionUsuario){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionUsuario.getMessage());
+            return service.getProductoById(id);
+        } catch (ExceptionProducto exceptionProducto) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionProducto.getMessage());
         }
     }
 
-    @PutMapping(path = "/usuario")
-    private Usuario updateUsuario(@RequestBody @Validated Usuario usuario) throws ResponseStatusException {
+    @PutMapping(path = "/producto/{id}")
+    private Producto updateProducto(@PathVariable String id, @RequestBody @Validated Producto producto) throws ResponseStatusException {
         try {
-            return service.updateUsuario(usuario);
-        }catch(ExceptionUsuario exceptionUsuario){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionUsuario.getMessage());
+            return service.updateProducto(id, producto);
+        } catch (ExceptionProducto exceptionProducto) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionProducto.getMessage());
         }
     }
 
-    @DeleteMapping(path = "/usuario/{nombre}")
-    private void deleteUsuario(@PathVariable String nombre) throws ResponseStatusException {
-        try{
+    @DeleteMapping(path = "/producto/{nombre}")
+    private void deleteProducto(@PathVariable String nombre) throws ResponseStatusException {
+        try {
             service.deleteByName(nombre);
-        }catch(ExceptionUsuario exceptionUsuario){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionUsuario.getMessage());
+        } catch (ExceptionProducto exceptionProducto) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionProducto.getMessage());
         }
-
     }
-    
 }

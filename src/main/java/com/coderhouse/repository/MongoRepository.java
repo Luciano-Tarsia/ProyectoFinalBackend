@@ -1,6 +1,6 @@
 package com.coderhouse.repository;
 
-import com.coderhouse.model.Usuario;
+import com.coderhouse.model.Producto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -13,19 +13,19 @@ public class MongoRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public Usuario save(Usuario usuario, String collection){
-        return mongoTemplate.save(usuario, collection);
+    public Producto save(Producto producto, String collection) {
+        return mongoTemplate.save(producto, collection);
     }
 
-    public Usuario findById(String id){
-        return mongoTemplate.findById(id, Usuario.class);
+    public Producto findById(String id) {
+        return mongoTemplate.findById(id, Producto.class);
     }
 
-    public void findAndRemove(Query query){
-        mongoTemplate.findOne(query, Usuario.class);
+    public void findAndRemove(Query query) {
+        mongoTemplate.findOne(query, Producto.class);
     }
 
-    public Usuario findOne(Query query) {
-        return mongoTemplate.findOne(query, Usuario.class);
+    public Producto findOne(Query query) {
+        return mongoTemplate.findOne(query, Producto.class);
     }
 }
