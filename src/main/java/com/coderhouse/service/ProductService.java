@@ -24,6 +24,7 @@ public class ProductService {
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     public Product addProduct(Product product){
+        logger.info("Agregando producto");
         return mongoRepository.saveProduct(product);
     }
 

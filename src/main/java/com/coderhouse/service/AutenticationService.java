@@ -31,7 +31,7 @@ public class AutenticationService {
         }else if (mongoRepository.findByEmail(user.getEmail()).size() > 0) { //Checking if the mail is being alredy used
             throw new ExceptionAutentication("El email ya está siendo usado");
         }else{
-            User newUser = mongoRepository.saveUser(user, "Users");
+            User newUser = mongoRepository.saveUser(user);
             return newUser;
         }
     }

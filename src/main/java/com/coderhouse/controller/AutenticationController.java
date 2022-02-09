@@ -24,7 +24,7 @@ public class AutenticationController {
 
     @PostMapping(path = "/login")
     private String loginAutentificatition(@RequestParam("email") String userEmail, @RequestParam("password") String userPassword) {
-        String token = jwtProvider.getJWTToken(userEmail, jwtSecret);
+        String token = jwtProvider.getJWTToken(userEmail);
         return token;
     }
 

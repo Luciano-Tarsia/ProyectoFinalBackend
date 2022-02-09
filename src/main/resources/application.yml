@@ -9,3 +9,4 @@ server:
 
 jwt:
   expiration: 60000
+  secret: springbootjwtcoderhouse

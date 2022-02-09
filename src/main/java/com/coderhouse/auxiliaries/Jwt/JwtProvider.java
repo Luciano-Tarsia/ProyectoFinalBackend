@@ -1,5 +1,6 @@
 package com.coderhouse.auxiliaries.Jwt;
 
+import com.coderhouse.auxiliaries.constants.Constants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -16,25 +17,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtProvider implements Serializable {
 
-    @Value("${jwt.expiration}")
-    private int expiration;
+    private final ApplicationProperties properties;
 
-    public String getJWTToken(String username, String secret){
-        var grantedAuthorities = AuthorityUtils.
-                commaSeparatedStringToAuthorityList("ROLE_USER");
+    public String getJWTToken(String username) {
+        var grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(Constants.ROLE);
 
-        String token = Jwts
-                .builder()
+        return Jwts.builder()
                 .setSubject(username)
-                .claim("authorities",
+                .claim(Constants.AUTHORITIES,
                         grantedAuthorities.stream()
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS512,
-                        secret.getBytes()).compact();
-
-        return  "Bearer " + token;
+                .setExpiration(new Date(System.currentTimeMillis() + properties.getExpiration()))
+                .signWith(SignatureAlgorithm.HS512, properties.getJwtSecret().getBytes())
+                .compact();
     }
 }

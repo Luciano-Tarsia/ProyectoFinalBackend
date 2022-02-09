@@ -18,8 +18,8 @@ public class MongoRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public User saveUser(User user, String collection) {
-        return mongoTemplate.save(user, collection);
+    public User saveUser(User user) {
+        return mongoTemplate.save(user, "Users");
     }
 
     public Product saveProduct(Product product) {
