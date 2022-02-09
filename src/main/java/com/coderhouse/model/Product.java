@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @ToString
-@Document("productos")
+@Document("Products")
 public class Product {
 
     private Double unitPrice;

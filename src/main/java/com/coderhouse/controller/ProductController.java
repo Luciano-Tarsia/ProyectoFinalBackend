@@ -31,4 +31,9 @@ public class ProductController {
         return productService.traerProductosPorCategoria(categoria);
     }
 
+    @GetMapping(path = "")
+    private List<Product> traerProductos() {
+        return productService.traerProductos();
+    }
+
 }

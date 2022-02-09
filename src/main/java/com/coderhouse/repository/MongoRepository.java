@@ -1,8 +1,11 @@
 package com.coderhouse.repository;
 
+import com.coderhouse.model.Cart;
 import com.coderhouse.model.Product;
 import com.coderhouse.model.User;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -18,12 +21,10 @@ public class MongoRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    // Methods used by the User class
+
     public User saveUser(User user) {
         return mongoTemplate.save(user, "Users");
-    }
-
-    public Product saveProduct(Product product) {
-        return mongoTemplate.save(product, "Products");
     }
 
     public List<User> findByEmail(String email) {
@@ -32,7 +33,17 @@ public class MongoRepository {
         return mongoTemplate.find(query, User.class);
     }
 
-    public void findAndRemoveById(String id){
+    // Methods used by the Product class
+
+    public Product saveProduct(Product product) {
+        return mongoTemplate.save(product, "Products");
+    }
+
+    public List<Product> findAllProducts() {
+        return mongoTemplate.findAll(Product.class, "Products");
+    }
+
+    public void findAndRemoveById(String id) { //Chequear el funcionamiento
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         mongoTemplate.findAllAndRemove(query, "Products");
@@ -44,12 +55,22 @@ public class MongoRepository {
         return mongoTemplate.find(query, Product.class);
     }
 
-//    public Producto findById(String id) {
-//        return mongoTemplate.findById(id, Producto.class);
-//    }
+    public Product findByProductId(String id) {
+        return mongoTemplate.findById(id, Product.class, "Products");
+    }
 
-//    public void findAndRemove(Query query) {
-//        mongoTemplate.findOne(query, Producto.class);
-//    }
+    // Methods used by the Cart class
+
+    public Cart saveCart(Cart cart) {
+        return mongoTemplate.save(cart, "Carts");
+    }
+
+    public Cart findCartById(String id) {
+        return mongoTemplate.findById(id, Cart.class, "Carts");
+    }
+
+    public Cart updateCart(Cart cart) {
+        return mongoTemplate.save(cart, "Carts");
+    }
 
 }

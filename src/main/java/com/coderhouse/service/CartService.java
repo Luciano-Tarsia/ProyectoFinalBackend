@@ -1,5 +1,7 @@
 package com.coderhouse.service;
 
+import com.coderhouse.model.Cart;
+import com.coderhouse.model.CartAux;
 import com.coderhouse.model.Product;
 import com.coderhouse.repository.MongoRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class ProductService {
+public class CartService {
 
     @Autowired
     MongoTemplate mongoTemplate;
@@ -23,21 +23,17 @@ public class ProductService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
-    public Product addProduct(Product product){
-        logger.info("Agregando producto");
-        return mongoRepository.saveProduct(product);
+    public Cart createNewCart(Cart cart){
+        logger.info("Agregando cart");
+        return mongoRepository.saveCart(cart);
     }
 
-    public void eliminateProduct(String id){
-        mongoRepository.findAndRemoveById(id);
-    }
-
-    public List<Product> traerProductos(){
-        return mongoRepository.findAllProducts();
-    }
-
-    public List<Product> traerProductosPorCategoria(String categoria){
-        return mongoRepository.findByCategory(categoria);
+    public void addItemToCart(String cartId, String productId, Integer cantidad){
+        logger.info("Agregando producto a un cart");
+        Product product = mongoRepository.findByProductId(productId);
+        Cart cart = mongoRepository.findCartById(cartId);
+        cart.addItem(product, cantidad);
+        mongoRepository.updateCart(cart);
     }
 
 }

@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @ToString
-@Document("usuarios")
+@Document("Users")
 public class User {
 
     private String name;
