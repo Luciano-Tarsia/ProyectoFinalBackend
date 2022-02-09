@@ -1,6 +1,6 @@
 package com.coderhouse.repository;
 
-import com.coderhouse.model.Producto;
+import com.coderhouse.model.Product;
 import com.coderhouse.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ public class MongoRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public Producto save(Producto producto, String collection) {
-        return mongoTemplate.save(producto, collection);
-    }
-
     public User saveUser(User user, String collection) {
         return mongoTemplate.save(user, collection);
+    }
+
+    public Product saveProduct(Product product) {
+        return mongoTemplate.save(product, "Products");
     }
 
     public List<User> findByEmail(String email) {
@@ -32,15 +32,24 @@ public class MongoRepository {
         return mongoTemplate.find(query, User.class);
     }
 
-    public Producto findById(String id) {
-        return mongoTemplate.findById(id, Producto.class);
+    public void findAndRemoveById(String id){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(id));
+        mongoTemplate.findAllAndRemove(query, "Products");
     }
 
-    public void findAndRemove(Query query) {
-        mongoTemplate.findOne(query, Producto.class);
+    public List<Product> findByCategory(String categoria) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("category").is(categoria));
+        return mongoTemplate.find(query, Product.class);
     }
 
-    public Producto findOne(Query query) {
-        return mongoTemplate.findOne(query, Producto.class);
-    }
+//    public Producto findById(String id) {
+//        return mongoTemplate.findById(id, Producto.class);
+//    }
+
+//    public void findAndRemove(Query query) {
+//        mongoTemplate.findOne(query, Producto.class);
+//    }
+
 }

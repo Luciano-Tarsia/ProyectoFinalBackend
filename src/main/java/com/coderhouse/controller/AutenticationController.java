@@ -2,22 +2,17 @@ package com.coderhouse.controller;
 
 
 import com.coderhouse.auxiliaries.Jwt.JwtProvider;
-import com.coderhouse.handle.ExceptionAutentification;
-import com.coderhouse.model.Producto;
+import com.coderhouse.handle.ExceptionAutentication;
 import com.coderhouse.model.User;
-import com.coderhouse.model.UserSimplify;
-import com.coderhouse.service.AutentificationService;
+import com.coderhouse.service.AutenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "")
-public class AutentificationController {
+public class AutenticationController {
 
     private String jwtSecret = "springbootjwtcoderhouse";
 
@@ -25,7 +20,7 @@ public class AutentificationController {
     JwtProvider jwtProvider;
 
     @Autowired
-    AutentificationService autentificationService;
+    AutenticationService autenticationService;
 
     @PostMapping(path = "/login")
     private String loginAutentificatition(@RequestParam("email") String userEmail, @RequestParam("password") String userPassword) {
@@ -34,8 +29,8 @@ public class AutentificationController {
     }
 
     @PostMapping(path = "/user")
-    private User createNewUser(@RequestBody User user) throws ExceptionAutentification {
-        return autentificationService.createNewUser(user);
+    private User createNewUser(@RequestBody User user) throws ExceptionAutentication {
+        return autenticationService.createNewUser(user);
     }
 
 }

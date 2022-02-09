@@ -15,6 +15,7 @@ import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.security.Security;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -28,7 +29,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         try{
             if (existJWTToke(request, response)){
                 Claims claims = validateToken(request);
-                if (claims.get("authorities") != null){
+                if (!Objects.isNull(claims.get("authorities"))){
                     setUpStringAuthentication(claims);
                 } else {
                     SecurityContextHolder.clearContext();
@@ -39,8 +40,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e){
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
-            return;
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
         }
     }
 
@@ -57,6 +57,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         return Jwts.parser().setSigningKey(jwtSecret.getBytes()).parseClaimsJwt(jwtToken).getBody();
     }
 
+    @SuppressWarnings("unchecked")
     private void setUpStringAuthentication(Claims claims){
         List<String> authorities = (List) claims.get("authorities");
 
