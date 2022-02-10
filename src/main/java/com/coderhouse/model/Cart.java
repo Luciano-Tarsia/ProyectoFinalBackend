@@ -41,17 +41,18 @@ public class Cart {
         this.listOfProducts.add(item);
     }
 
-    public void modifyItem(Integer quantity, String productId) {
+    public Integer modifyItem(Integer quantity, String productId) {
         Integer index = -1;
         // Busco la posición del item a modificar
         for (Integer i = 0; i < this.listOfProducts.size(); i++) {
             if (listOfProducts.get(i).getProduct().getId().equals(productId)) {
                 index = i;
+                break;
             }
         }
         // Si o existe el item, no hago nada
         if (index == -1) {
-            return;
+            return index;
         }
 
         // Si existe el item, creo uno nuevo con las mismas caracteristicas que el anterior, pero con distinta cantidad
@@ -61,11 +62,12 @@ public class Cart {
                 quantity);
         this.listOfProducts.remove(listOfProducts.get(index));
         listOfProducts.add(item);
+        return index;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
-    public void deleteItem(String productId) {
+    public Integer deleteItem(String productId) {
         Integer index = -1;
         for (Integer i = 0; i < this.listOfProducts.size(); i++) {
             if (listOfProducts.get(i).getProduct().getId().equals(productId)) {
@@ -74,9 +76,10 @@ public class Cart {
             }
         }
         if (index == -1) {
-            return;
+            return index;
         }
         this.listOfProducts.remove(listOfProducts.get(index));
+        return index;
     }
 
 }

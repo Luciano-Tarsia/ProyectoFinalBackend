@@ -1,13 +1,14 @@
 package com.coderhouse.controller;
 
-
 import com.coderhouse.auxiliaries.Jwt.JwtProvider;
 import com.coderhouse.handle.ExceptionAutentication;
 import com.coderhouse.model.User;
 import com.coderhouse.service.AutenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +30,11 @@ public class AutenticationController {
     }
 
     @PostMapping(path = "/user")
-    private User createNewUser(@RequestBody User user) throws ExceptionAutentication {
-        return autenticationService.createNewUser(user);
+    private User createNewUser(@RequestBody User user) throws ResponseStatusException, ExceptionAutentication {
+        try {
+            return autenticationService.createNewUser(user);
+        } catch (ExceptionAutentication exceptionAutentication) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionAutentication.getMessage());
+        }
     }
-
 }
