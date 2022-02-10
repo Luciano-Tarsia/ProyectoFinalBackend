@@ -1,5 +1,6 @@
 package com.coderhouse.service;
 
+import com.coderhouse.handle.ExceptionProduct;
 import com.coderhouse.model.Product;
 import com.coderhouse.repository.MongoRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,14 @@ public class ProductService {
 
     public List<Product> traerProductosPorCategoria(String categoria){
         return mongoRepository.findByCategory(categoria);
+    }
+
+    public Product traerProductoPorId(String productId) throws ExceptionProduct {
+        if(mongoRepository.countByProductId(productId) > 0){
+            return mongoRepository.findByProductId(productId);
+        }else {
+            throw new ExceptionProduct("El producto buscado no se encuentra en la base de datos");
+        }
     }
 
 }

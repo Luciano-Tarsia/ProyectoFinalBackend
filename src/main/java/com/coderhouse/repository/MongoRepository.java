@@ -46,7 +46,8 @@ public class MongoRepository {
     public void findAndRemoveById(String id) { //Chequear el funcionamiento
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
-        mongoTemplate.findAllAndRemove(query, "Products");
+        Product productToRemove = mongoTemplate.findOne(query, Product.class, "Products");
+        mongoTemplate.remove(productToRemove);
     }
 
     public List<Product> findByCategory(String categoria) {
@@ -57,6 +58,12 @@ public class MongoRepository {
 
     public Product findByProductId(String id) {
         return mongoTemplate.findById(id, Product.class, "Products");
+    }
+
+    public Long countByProductId(String id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(id));
+        return mongoTemplate.count(query, Product.class, "Products");
     }
 
     // Methods used by the Cart class
