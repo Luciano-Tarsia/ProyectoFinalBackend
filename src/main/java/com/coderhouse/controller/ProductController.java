@@ -21,7 +21,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @PostMapping(path = "/agregar")
     private Product agregarProducto(@RequestBody Product product) {
@@ -29,8 +29,12 @@ public class ProductController {
     }
 
     @DeleteMapping(path = "/eliminar/{id}")
-    private void eliminarProducto(@PathVariable("id") String id) {
-        productService.eliminateProduct(id);
+    private void eliminarProducto(@PathVariable("id") String id) throws ResponseStatusException {
+        try {
+            productService.eliminateProduct(id);
+        } catch (ExceptionProduct exceptionProduct) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionProduct.getMessage());
+        }
     }
 
     @GetMapping(path = "/{categoria}")
@@ -42,7 +46,7 @@ public class ProductController {
     private Product traerProductosPorId(@PathVariable("productId") String productId) throws ResponseStatusException {
         try {
             return productService.traerProductoPorId(productId);
-        }catch (ExceptionProduct exceptionProduct){
+        } catch (ExceptionProduct exceptionProduct) {
             logger.error(exceptionProduct.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionProduct.getMessage());
         }

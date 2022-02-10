@@ -1,6 +1,7 @@
 package com.coderhouse.repository;
 
 import com.coderhouse.model.Cart;
+import com.coderhouse.model.Order;
 import com.coderhouse.model.Product;
 import com.coderhouse.model.User;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class MongoRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    // Methods used by the User class
+    // Métodos para la clase User
 
     public User saveUser(User user) {
         return mongoTemplate.save(user, "Users");
@@ -33,7 +34,11 @@ public class MongoRepository {
         return mongoTemplate.find(query, User.class);
     }
 
-    // Methods used by the Product class
+    public User findByUserId(String id) {
+        return mongoTemplate.findById(id, User.class, "Users");
+    }
+
+    // Métodos para la clase Product
 
     public Product saveProduct(Product product) {
         return mongoTemplate.save(product, "Products");
@@ -43,7 +48,7 @@ public class MongoRepository {
         return mongoTemplate.findAll(Product.class, "Products");
     }
 
-    public void findAndRemoveById(String id) { //Chequear el funcionamiento
+    public void findAndRemoveById(String id) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         Product productToRemove = mongoTemplate.findOne(query, Product.class, "Products");
@@ -66,7 +71,7 @@ public class MongoRepository {
         return mongoTemplate.count(query, Product.class, "Products");
     }
 
-    // Methods used by the Cart class
+    // Métodos para la clase Cart
 
     public Cart saveCart(Cart cart) {
         return mongoTemplate.save(cart, "Carts");
@@ -78,6 +83,29 @@ public class MongoRepository {
 
     public Cart updateCart(Cart cart) {
         return mongoTemplate.save(cart, "Carts");
+    }
+
+    // Métodos para la clase Order
+
+    public Order saveOrder(Order order) {
+        return mongoTemplate.save(order, "Orders");
+    }
+
+    public Order findByOrderId(String orderId) {
+        return mongoTemplate.findById(orderId, Order.class, "Orders");
+    }
+
+    public Long countByOrderId(String orderId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(orderId));
+        return mongoTemplate.count(query, Order.class, "Orders");
+    }
+
+    public void deleteOrder(String orderId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(orderId));
+        Order orderToRemove = mongoTemplate.findOne(query, Order.class, "Orders");
+        mongoTemplate.remove(orderToRemove);
     }
 
 }

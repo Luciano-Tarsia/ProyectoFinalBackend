@@ -24,7 +24,7 @@ public class CartService {
     @Autowired
     private MongoRepository mongoRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CartService.class);
 
     public Cart createNewCart(Cart cart) {
         logger.info("Creando un nuevo cart");

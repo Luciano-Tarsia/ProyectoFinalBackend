@@ -81,5 +81,4 @@ public class Cart {
         this.listOfProducts.remove(listOfProducts.get(index));
         return index;
     }
-
 }
