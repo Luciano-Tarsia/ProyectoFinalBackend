@@ -20,13 +20,13 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-    @PostMapping(path = "/create")
+    @PostMapping(path = "/crear")
     private Cart createNewCart(@RequestParam("email") String email, @RequestParam("address") String address) {
         Cart cart = new Cart(email,address);
         return cartService.createNewCart(cart);
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/agregar")
     private void addItemToCart(@RequestParam("cartId") String cartId, @RequestParam("productId") String productId, @RequestParam("cantidad") Integer cantidad) {
         cartService.addItemToCart(cartId, productId, cantidad);
     }
@@ -37,12 +37,12 @@ public class CartController {
     }
 
     // Bug en este endpoint. Agrega pero no elimina
-    @PutMapping(path = "modify/{productId}")
+    @PutMapping(path = "/modificar/{productId}")
     private void modifyItemFromCart(@RequestParam("cartId") String cartId, @PathVariable("productId") String productId, @RequestParam("cantidad") Integer cantidad) {
         cartService.modifyCart(cartId, productId, cantidad);
     }
 
-    @DeleteMapping(path = "delete/{productId}")
+    @DeleteMapping(path = "/eliminar/{productId}")
     private void deleteItemFromCart(@RequestParam("cartId") String cartId, @PathVariable("productId") String productId) {
         cartService.deleteItemFromCart(cartId, productId);
     }

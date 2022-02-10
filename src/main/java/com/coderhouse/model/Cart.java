@@ -1,8 +1,11 @@
 package com.coderhouse.model;
 
+import com.coderhouse.service.ProductService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -56,21 +59,24 @@ public class Cart {
         // Agrego el item nuevo
         CartAux item = new CartAux(listOfProducts.get(index).getProduct(),
                 quantity);
-        listOfProducts.remove(index);
+        this.listOfProducts.remove(listOfProducts.get(index));
         listOfProducts.add(item);
     }
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     public void deleteItem(String productId) {
         Integer index = -1;
         for (Integer i = 0; i < this.listOfProducts.size(); i++) {
             if (listOfProducts.get(i).getProduct().getId().equals(productId)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             return;
         }
-        this.listOfProducts.remove(index);
+        this.listOfProducts.remove(listOfProducts.get(index));
     }
 
 }
