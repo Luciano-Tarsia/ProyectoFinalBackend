@@ -26,11 +26,11 @@ public class AutenticationService {
 
     public User createNewUser(User user) throws ExceptionAutentication {
         logger.info("Creating new user");
-        if (!Objects.equals(user.getPassword(), user.getPassword2())){ //Checking if passwords coincide
+        if (!Objects.equals(user.getPassword(), user.getPassword2())) { //Checking if passwords coincide
             throw new ExceptionAutentication("Las contaseñas no coinciden, el usuario no fue creado");
-        }else if (mongoRepository.findByEmail(user.getEmail()).size() > 0) { //Checking if the mail is being alredy used
+        } else if (mongoRepository.findByEmail(user.getEmail()).size() > 0) { //Checking if the mail is being alredy used
             throw new ExceptionAutentication("El email ya está siendo usado");
-        }else{
+        } else {
             User newUser = mongoRepository.saveUser(user);
             return newUser;
         }

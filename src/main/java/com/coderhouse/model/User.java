@@ -17,9 +17,10 @@ public class User {
     private String password;
     private String password2;
 
-    User(){};
+    User() {
+    }
 
-    User(String name, String phoneNumber, String email, String password){
+    User(String name, String phoneNumber, String email, String password) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;

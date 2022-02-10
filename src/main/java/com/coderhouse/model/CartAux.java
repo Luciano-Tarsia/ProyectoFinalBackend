@@ -9,14 +9,13 @@ public class CartAux {
 
     private Product product;
     private Integer quantity;
-    private Integer id;
 
-    CartAux(){}
+    CartAux() {
+    }
 
-    CartAux(Product prod, Integer quant, Integer id){
+    CartAux(Product prod, Integer quant) {
         this.product = prod;
-        this.quantity= quant;
-        this.id= id;
+        this.quantity = quant;
     }
 
 }

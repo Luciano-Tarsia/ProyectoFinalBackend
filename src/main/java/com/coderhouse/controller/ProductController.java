@@ -21,6 +21,7 @@ public class ProductController {
         return productService.addProduct(product);
     }
 
+    // No está funcionando el endpoint
     @DeleteMapping(path = "/eliminar/{id}")
     private void eliminarProducto(@PathVariable("id") String id) {
         productService.eliminateProduct(id);

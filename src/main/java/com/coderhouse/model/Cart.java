@@ -23,33 +23,31 @@ public class Cart {
     private List<CartAux> listOfProducts;
     private String homeAddress;
 
-    private Integer cartItemId = 0;
+    Cart() {
+    }
 
-    Cart(){}
-
-    public Cart(String email, String homeAddress){
+    public Cart(String email, String homeAddress) {
         this.email = email;
         this.date = LocalDateTime.now().toString();
         this.listOfProducts = new ArrayList<>();
         this.homeAddress = homeAddress;
     }
 
-    public void addItem(Product product, Integer quantity){
-        CartAux item = new CartAux(product, quantity, cartItemId);
-        cartItemId = cartItemId + 1;
+    public void addItem(Product product, Integer quantity) {
+        CartAux item = new CartAux(product, quantity);
         this.listOfProducts.add(item);
     }
 
-    public void modifyItem(Integer quantity, Integer id){
+    public void modifyItem(Integer quantity, String productId) {
         Integer index = -1;
         // Busco la posición del item a modificar
-        for (Integer i = 0; i < this.listOfProducts.size(); i++){
-            if (listOfProducts.get(i).getId().equals(id)){
+        for (Integer i = 0; i < this.listOfProducts.size(); i++) {
+            if (listOfProducts.get(i).getProduct().getId().equals(productId)) {
                 index = i;
             }
         }
         // Si o existe el item, no hago nada
-        if (index == -1){
+        if (index == -1) {
             return;
         }
 
@@ -57,19 +55,19 @@ public class Cart {
         // Elimino el item viejo
         // Agrego el item nuevo
         CartAux item = new CartAux(listOfProducts.get(index).getProduct(),
-                quantity, listOfProducts.get(index).getId());
+                quantity);
         listOfProducts.remove(index);
         listOfProducts.add(item);
     }
 
-    public void deleteItem(Integer id){
+    public void deleteItem(String productId) {
         Integer index = -1;
-        for (Integer i = 0; i < this.listOfProducts.size(); i++){
-            if (listOfProducts.get(i).getId().equals(id)){
+        for (Integer i = 0; i < this.listOfProducts.size(); i++) {
+            if (listOfProducts.get(i).getProduct().getId().equals(productId)) {
                 index = i;
             }
         }
-        if (index == -1){
+        if (index == -1) {
             return;
         }
         this.listOfProducts.remove(index);

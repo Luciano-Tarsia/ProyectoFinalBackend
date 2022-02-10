@@ -8,5 +8,5 @@ server:
   port: 8080
 
 jwt:
-  expiration: 60000
+  expiration: 60000000
   secret: springbootjwtcoderhouse
