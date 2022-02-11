@@ -21,8 +21,7 @@ public class OrderController {
 
     @PostMapping(path = "/crear")
     private Order createNewOrder(@RequestParam("userId") String userId, @RequestParam("cartId") String cartId) {
-        Order order = new Order(userId, cartId);
-        return orderService.createNewOrder(order);
+        return orderService.createNewOrder(userId, cartId);
     }
 
     @GetMapping(path = "/enviar")

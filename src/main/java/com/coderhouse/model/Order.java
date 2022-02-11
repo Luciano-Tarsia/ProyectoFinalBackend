@@ -2,6 +2,7 @@ package com.coderhouse.model;
 
 import com.coderhouse.repository.MongoRepository;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,6 @@ import java.util.List;
 @Document("Orders")
 public class Order {
 
-    @Autowired
-    MongoRepository mongoRepository;
-
     @Id
     private String id;
     private List<CartAux> listOfItems;
@@ -30,10 +28,10 @@ public class Order {
     Order() {
     }
 
-    public Order(String userId, String cartId) {
-        listOfItems = mongoRepository.findCartById(cartId).getListOfProducts();
+    public Order(User user, Cart cart) {
+        listOfItems = cart.getListOfProducts();
         date = LocalDateTime.now().toString();
-        email = mongoRepository.findByUserId(userId).getEmail();
+        email = user.getEmail();
     }
 
 }

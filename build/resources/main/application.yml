@@ -3,6 +3,22 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/proyectofinal
       database: proyectofinal
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lucianocoderhouse@gmail.com
+    password: dqbphcqvkzmdtvfm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
 
 server:
   port: 8080
