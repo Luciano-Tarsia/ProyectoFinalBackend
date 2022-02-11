@@ -1,7 +1,7 @@
-package com.coderhouse.auxiliaries.Config;
+package com.coderhouse.auxiliaries.config;
 
-import com.coderhouse.auxiliaries.Jwt.ApplicationProperties;
-import com.coderhouse.auxiliaries.Jwt.JwtTokenFilter;
+import com.coderhouse.auxiliaries.jwt.ApplicationProperties;
+import com.coderhouse.auxiliaries.jwt.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

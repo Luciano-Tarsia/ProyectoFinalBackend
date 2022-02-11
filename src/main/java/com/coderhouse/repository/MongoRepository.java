@@ -34,6 +34,12 @@ public class MongoRepository {
         return mongoTemplate.find(query, User.class);
     }
 
+    public User findUserByEmail(String email) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(email));
+        return mongoTemplate.findOne(query, User.class);
+    }
+
     public User findByUserId(String id) {
         return mongoTemplate.findById(id, User.class, "Users");
     }

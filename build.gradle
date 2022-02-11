@@ -47,6 +47,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail:1.2.0.RELEASE'
 	implementation 'com.sun.mail:javax.mail:1.6.2'
 
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'redis.clients:jedis'
+
 }
 
 tasks.named('test') {

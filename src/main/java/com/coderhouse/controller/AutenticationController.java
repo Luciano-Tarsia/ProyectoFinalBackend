@@ -1,6 +1,6 @@
 package com.coderhouse.controller;
 
-import com.coderhouse.auxiliaries.Jwt.JwtProvider;
+import com.coderhouse.auxiliaries.jwt.JwtProvider;
 import com.coderhouse.handle.ExceptionAutentication;
 import com.coderhouse.model.User;
 import com.coderhouse.service.AutenticationService;
@@ -24,9 +24,12 @@ public class AutenticationController {
     AutenticationService autenticationService;
 
     @PostMapping(path = "/login")
-    private String loginAutentificatition(@RequestParam("email") String userEmail, @RequestParam("password") String userPassword) {
-        String token = jwtProvider.getJWTToken(userEmail);
-        return token;
+    private String loginAutentificatition(@RequestParam("email") String userEmail, @RequestParam("password") String userPassword) throws ResponseStatusException {
+        try {
+            return autenticationService.login(userEmail, userPassword);
+        }catch (ExceptionAutentication exceptionAutentication){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exceptionAutentication.getMessage());
+        }
     }
 
     @PostMapping(path = "/user")

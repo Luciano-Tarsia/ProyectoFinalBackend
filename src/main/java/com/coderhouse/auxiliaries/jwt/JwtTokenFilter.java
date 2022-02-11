@@ -1,4 +1,4 @@
-package com.coderhouse.auxiliaries.Jwt;
+package com.coderhouse.auxiliaries.jwt;
 
 import com.coderhouse.auxiliaries.constants.Constants;
 import io.jsonwebtoken.*;

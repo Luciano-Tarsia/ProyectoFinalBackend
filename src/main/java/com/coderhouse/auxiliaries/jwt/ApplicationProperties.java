@@ -1,4 +1,4 @@
-package com.coderhouse.auxiliaries.Jwt;
+package com.coderhouse.auxiliaries.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

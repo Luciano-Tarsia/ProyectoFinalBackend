@@ -1,10 +1,9 @@
-package com.coderhouse.auxiliaries.Jwt;
+package com.coderhouse.auxiliaries.jwt;
 
 import com.coderhouse.auxiliaries.constants.Constants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
